@@ -10,14 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 4) do
+ActiveRecord::Schema.define(version: 6) do
 
   create_table "board_games", force: :cascade do |t|
     t.string "title"
+    t.integer "year_published"
+    t.integer "min_players"
+    t.integer "max_players"
+    t.integer "playing_time"
+    t.integer "age"
+    t.float "complexity_rating"
+    t.text "description"
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.text "text"
+    t.text "review"
     t.integer "user_id"
     t.integer "board_game_id"
     t.integer "rating"
