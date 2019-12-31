@@ -2,7 +2,6 @@ class CommandLineInterface
   def run
     greet
     main_menu
-    get_menu_input
   end
 
   def greet
@@ -34,6 +33,7 @@ class CommandLineInterface
     puts "5. Delete one of your board game reviews"
     puts "6. Exit"
     puts ""
+    get_menu_input
   end
 
   def get_menu_input
