@@ -38,12 +38,15 @@ class CommandLineInterface
     puts "8. Taboo"
     puts "9. Ticket to Ride"
     puts "10. Uno"
-    puts "" # Need to add an exit
+    puts ""
+    puts "11. Exit"
     input = get_input.to_i
-    if [1..10].include?(input)
+    if [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].include?(input)
       board_game_selection(input)
+    elsif input == 11
+      exit_message
     else
-      puts "That option does not exist. Please enter a number 1-10."
+      puts "That option does not exist. Please enter a number 1 - 10."
     end
   end
 
@@ -74,19 +77,19 @@ class CommandLineInterface
 
   def print_game_info(title)
     selection = BoardGame.where(title: title)
-    hash = selection.attributes
+    hash = selection.first.attributes
     hash.each do |key, value|
       if key != "id"
         puts "#{key}: #{value}"
       end
     end
-    id = selection["id"]
+    id = hash["id"]
     write_board_game_review(id)
   end
 
   ########## old code below #############
 
-  def write_board_game_review
+  def write_board_game_review(board_game_id)
     puts "Please enter a rating 1 to 10:"
     rating = get_input.to_i
     puts ""
@@ -183,8 +186,61 @@ class CommandLineInterface
       selection = get_input.to_i
     end
     to_edit = reviews[num - 1]
-    # Refactor!
+    puts "Please enter a rating 1 to 10:" # Refactor!
+    rating = get_input.to_i
+    puts ""
+    while ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10].include?(rating)
+      puts "Please enter a valid rating between 1 and 10:"
+      rating = get_input.to_i
+    end
+    User.find($current_user_id).reviews[num - 1].update_attribute(:rating, rating)
+    puts "Enter your review:" #Refactor!
+    review = get_input
+    User.find($current_user_id).reviews[num - 1].update_attribute(:review, review)
+    edited_review = User.find($current_user_id).reviews[num - 1]
+    edited_hash = edited_review.first.attributes
+    edited_hash.each do |key, value| #Refactor!
+      if key == "board_game_id"
+        puts "name: #{BoardGame.find(edited_hash["board_game_id"]).name}"
+      end
+    end
+    edited_hash.each do |key, value|
+      if key == "rating"
+        puts "#{key}: #{value}"
+      end
+      if key == "review"
+        puts "#{key}: #{value}"
+      end
+    end
+    reviews_menu
+  end
 
+  def delete_review
+    reviews = User.find($current_user_id).reviews
+    see_reviews
+    puts "-------------------------------------------------------------"
+    puts "Enter a number associated with the review you want to delete:"
+    selection = gets.chomp.to_i
+    while !(1..reviews.length).to_a.include(selection)
+      puts "Please enter a valid number:"
+      selection = gets.chomp.to_i
+    end
+    puts "--------------------------------------------"
+    puts "Are you sure you want to delete this review?"
+    puts "Please select an option below:"
+    puts "1. Delete the review"
+    puts "2. Never mind, go back to the main menu"
+    confirmation = gets.chomp.to_i
+    while ![1, 2].include?(confirmation)
+      puts "Please enter a valid number:"
+      confirmation = gets.chomp.to_i
+    end
+    if confirmation == 1
+      User.find($current_user_id).reviews[num - 1].delete
+      puts "------------------------------------------"
+      puts "Your review has been deleted successfully."
+    end
+    main_menu
   end
 
   def get_input
