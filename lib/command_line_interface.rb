@@ -1,16 +1,27 @@
 class CommandLineInterface
   def run
     greet
-    intro
+    main_menu
     get_menu_input
   end
 
   def greet
     puts "Welcome to BoardGameNerd, the best resource for board game information in the world!"
     puts "Thinking of playing a board game? We can help you find an awesome game to play!"
+    get_user_name
   end
 
-  def intro
+  def get_user_name
+    puts ""
+    puts "What's your name: "
+    name = gets.chomp
+    puts ""
+    User.find_or_create_by(name: name)
+    puts "Nice to meet you, #{name}!"
+    puts ""
+  end
+
+  def main_menu
     puts ""
     puts "------------------------"
     puts "Select a number from 1-6"
