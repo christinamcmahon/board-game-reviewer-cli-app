@@ -5,7 +5,7 @@ require "tty-font"
 class CommandLineInterface
   @@prompt = TTY::Prompt.new
   @@font = TTY::Font.new(:block)
-  current_user_id = 0
+  @@current_user_id = 0
 
   ### Run Method ###
 
@@ -22,21 +22,18 @@ class CommandLineInterface
     puts "Let me help you find an awesome game to play!".colorize(:cyan)
     name = @@prompt.ask("What is your name?", default: "User")
     current_user = User.find_or_create_by(name: name)
-    $current_user_id = current_user.id
+    @@current_user_id = current_user.id
     puts "Nice to meet you, #{name}!".colorize(:cyan)
   end
 
   def main_menu
     puts ""
-    query = "Choose a game to review:"
-    options = ["Bananagrams", "Codenames", "King of Tokyo", "Magic: the Gathering", "Mysterium", "Settlers of Catan", "Splendor", "Taboo", "Ticket to Ride", "Uno", "See all of my reviews", "See highest rated board game", "Exit"]
+    query = "Choose a game to review: (Scroll for more options)"
+    options = ["Bananagrams", "Codenames", "King of Tokyo", "Magic: the Gathering", "Mysterium", "Settlers of Catan", "Splendor", "Taboo", "Ticket to Ride", "Uno", "See all of my reviews", "Exit"]
     selection = @@prompt.select(query, options)
     if selection == "See all of my reviews"
       see_reviews
       reviews_menu(nil)
-    elsif selection == "See highest rated board game"
-      highest_rated_game
-      main_menu
     elsif selection == "Exit"
       exit_message
     else
@@ -96,8 +93,7 @@ class CommandLineInterface
   def write_board_game_review(board_game_id)
     rating = rate
     review = write_review_text
-    Review.create(rating: rating, review: review, user_id: $current_user_id, board_game_id: board_game_id)
-
+    Review.create(rating: rating, review: review, user_id: @@current_user_id, board_game_id: board_game_id)
     puts "------------------------".colorize(:light_green)
     puts "Thank you for your review!".colorize(:cyan)
     selection = @@prompt.select("What you would like to do next?:", ["Back to main menu", "Exit"])
@@ -112,7 +108,7 @@ class CommandLineInterface
   ### Read Method ###
 
   def see_reviews
-    reviews = User.find($current_user_id).reviews
+    reviews = User.find(@@current_user_id).reviews
     num = 1
     if reviews.length == 0
       puts "You don't have any reviews yet!".colorize(:cyan)
@@ -132,7 +128,7 @@ class CommandLineInterface
   ### Update Method ###
 
   def edit_review
-    reviews = User.find($current_user_id).reviews
+    reviews = User.find(@@current_user_id).reviews
     see_reviews
     puts "------------------------".colorize(:light_green)
     options = [] # refactor?
@@ -144,10 +140,10 @@ class CommandLineInterface
     selection = @@prompt.select("Enter the number associated with the review you want to edit:", options)
     to_edit = reviews[selection - 1]
     rating = rate
-    User.find($current_user_id).reviews[selection - 1].update_attribute(:rating, rating)
+    User.find(@@current_user_id).reviews[selection - 1].update_attribute(:rating, rating)
     review = write_review_text
-    User.find($current_user_id).reviews[selection - 1].update_attribute(:review, review)
-    edited_review = User.find($current_user_id).reviews[selection - 1]
+    User.find(@@current_user_id).reviews[selection - 1].update_attribute(:review, review)
+    edited_review = User.find(@@current_user_id).reviews[selection - 1]
     edited_hash = edited_review.attributes
     edited_hash.each do |key, value|
       if key == "board_game_id"
@@ -161,7 +157,7 @@ class CommandLineInterface
   ### Delete Method ###
 
   def delete_review
-    reviews = User.find($current_user_id).reviews
+    reviews = User.find(@@current_user_id).reviews
     see_reviews
     puts "------------------------"
     options = [] # refactor?
@@ -175,7 +171,7 @@ class CommandLineInterface
     options = ["Delete the review".colorize(:red), "Never mind, go back to the main menu"]
     confirmation = @@prompt.select("Are you sure you want to delete this review?", options)
     if confirmation == "Delete the review"
-      User.find($current_user_id).reviews[selection - 1].delete
+      User.find(@@current_user_id).reviews[selection - 1].delete
       puts "------------------------".colorize(:light_green)
       puts "Your review has been deleted successfully.".colorize(:red)
     end
@@ -191,11 +187,6 @@ class CommandLineInterface
       sum += review["rating"]
     end
     sum / board_game_reviews.length
-  end
-
-  def highest_rated_game
-    best = BoardGame.all.max_by { |key| key[:rating] }[:title]
-    puts "The highest rated board game is: ".colorize(:cyan) + "#{best}".colorize(:light_magenta)
   end
 
   ### Helper Methods ###
