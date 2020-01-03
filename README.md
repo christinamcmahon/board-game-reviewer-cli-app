@@ -52,4 +52,6 @@ In order to further my app, I wanted to:
 
 # Walkthrough
 
-ADD SCREEN SHOTS HERE
+[!["Welcome page with name prompt"](screenshots/Screen Shot 2020-01-02 at 3.29.14 PM.png)]
+
+!["alt"](https://raw.githubusercontent.com/christinamcmahon/ruby-project-alt-guidelines-seattle-web-120919/screenshots/welcome_screenshot.png)
