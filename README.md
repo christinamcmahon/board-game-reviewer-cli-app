@@ -3,6 +3,8 @@ Flatiron - Mod 1 Project: My Board Games Reviewer
 
 My Board Games Reviewer was created by Christina ([christinamcmahon](https://github.com/christinamcmahon)). 
 
+!["Video walkthrough"](https://youtu.be/Kngrksyw2u0)
+
 ## About
 
 My Board Games Reviewer allows users to get information about and rate Christina's selection of board games. The user can also find information like which of Christina's board games is most popular.
@@ -24,7 +26,7 @@ This app makes use of the following gems:
 ## How to Use
  
 1. Clone this to your computer
-2. In the terminal, run **rake db:migrate** and **rake db:seed** to populate the database
+2. In the terminal, run **bundle**, **rake db:migrate** and **rake db:seed** to populate the database
 3. Start the app by entering **ruby bin/run.rb** in the terminal 
 
 ## MVP
