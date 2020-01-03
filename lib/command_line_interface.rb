@@ -70,7 +70,7 @@ class CommandLineInterface
   def reviews_menu(board_game_id = nil)
     reviews = User.find(@@current_user_id).reviews
     query = "Please select an option:"
-    options = ["Write a review", "Edit a review", "Delete a review", "Back to main menu"]
+    options = ["Write a review", "Edit a review", "Delete a review", "See reviews for this game", "Back to main menu"]
     selection = @@prompt.select(query, options)
     case selection
     when "Write a review"
@@ -94,6 +94,9 @@ class CommandLineInterface
       else
         delete_review
       end
+    when "See reviews for this game"
+      see_reviews_for_this_game(board_game_id)
+      reviews_menu
     when "Back to main menu"
       main_menu
     end
@@ -116,7 +119,7 @@ class CommandLineInterface
     end
   end
 
-  ### Read Method ###
+  ### Read Methods ###
 
   def see_reviews
     reviews = User.find(@@current_user_id).reviews
@@ -129,6 +132,24 @@ class CommandLineInterface
       hash.each do |key, value|
         if key == "board_game_id"
           puts "#{num}. Title: #{BoardGame.find(hash["board_game_id"]).title}".colorize(:magenta)
+        end
+      end
+      show_rating_and_review(hash)
+      num += 1
+    end
+  end
+
+  def see_reviews_for_this_game(board_game_id)
+    reviews = Review.where(board_game_id: board_game_id)
+    num = 1
+    if reviews.length == 0
+      puts "There aren't any reviews for this game.".colorize(:cyan)
+    end
+    reviews.each do |review|
+      hash = review.attributes
+      hash.each do |key, value|
+        if key == "board_game_id"
+          puts "#{num}. User: #{User.find(hash["user_id"]).name}".colorize(:magenta)
         end
       end
       show_rating_and_review(hash)
