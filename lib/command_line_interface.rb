@@ -38,6 +38,7 @@ class CommandLineInterface
       exit_message
     else
       print_game_info(selection)
+      games_menu(BoardGame.where(title: selection).first.id)
     end
   end
 
@@ -64,10 +65,41 @@ class CommandLineInterface
     puts "Complexity Rating: #{hash["complexity_rating"]}/5".colorize(:light_magenta)
     puts "Description: #{hash["description"]}".colorize(:light_magenta)
     puts "------------------------".colorize(:light_green)
-    reviews_menu(board_game_id)
   end
 
   def reviews_menu(board_game_id = nil)
+    reviews = User.find(@@current_user_id).reviews
+    query = "Please select an option:"
+    options = ["Write a review", "Edit a review", "Delete a review", "Back to main menu"]
+    selection = @@prompt.select(query, options)
+    case selection
+    when "Write a review"
+      if board_game_id == nil
+        puts "You must first select a game from the main menu.".colorize(:cyan)
+        main_menu
+      else
+        write_board_game_review(board_game_id)
+      end
+    when "Edit a review"
+      if reviews.length == 0
+        puts "You do not have any reviews to edit.".colorize(:red)
+        main_menu
+      else
+        edit_review
+      end
+    when "Delete a review"
+      if reviews.length == 0
+        puts "You do not have any reviews to delete.".colorize(:red)
+        main_menu
+      else
+        delete_review
+      end
+    when "Back to main menu"
+      main_menu
+    end
+  end
+
+  def games_menu(board_game_id = nil) # Refactor!
     reviews = User.find(@@current_user_id).reviews
     query = "Please select an option:"
     options = ["Write a review", "Edit a review", "Delete a review", "See reviews for this game", "Back to main menu"]
