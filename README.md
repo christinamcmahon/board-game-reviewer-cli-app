@@ -21,16 +21,13 @@ This app makes use of the following gems:
 - sqlite3
 - pry
 
-### How to Use
+## How to Use
  
- FILL THIS SECTION
-  * How to install your application.
-  * How to run your application.
-  * How to use your application (commands that can be run).
+1. Clone this to your computer
+2. In the terminal, run **rake db:migrate** and **rake db:seed** to populate the database
+3. Start the app by entering **ruby bin/run.rb** in the terminal 
 
----
-
-### MVP
+## MVP
 
 At a minimum, I wanted to the app to fulfill the following MVPs:
 1. User should be able to see relevant information about a board game
@@ -38,8 +35,6 @@ At a minimum, I wanted to the app to fulfill the following MVPs:
 3. User should be able to edit one of their reviews for a board game
 4. User should be able to delete one of their reviews for a board game
 5. User should be able to see a list of all of their reviews
-
----
 
 ### Stretch Goals
 
@@ -52,6 +47,37 @@ In order to further my app, I wanted to:
 
 # Walkthrough
 
-!["Welcome page with name prompt"](file:///Users/christinamcmahon/Development/code/ruby-project-alt-guidelines-seattle-web-120919/screenshots/welcome_screenshot.png)
+## Welcome Page
 
-!["Welcome page with name prompt"](https://raw.githubusercontent.com/christinamcmahon/ruby-project-alt-guidelines-seattle-web-120919/blob/master/screenshots/welcome_screenshot.png)
+User's name defaults to 'User' if no name is entered.
+
+!["Welcome page with name prompt"](/screenshots/001_welcome.png)
+
+## Main Menu
+
+!["Main Menu"](/screenshots/002_main_menu.png)
+
+## Game Information
+!["Game Info"](screenshots/003_game_info.png)
+
+## Write Review
+
+!["Write Review"](screenshots/004_write_review.png)
+
+## See All Current User's Reviews
+
+!["See all of the current user's reviews"](screenshots/005_all_reviews.png)
+
+## Edit One of the Current User's Reviews
+
+!["Edit review menu"](screenshots/006_edit_review.png)
+
+!["Edit review"](screenshots/007_edit_review.png)
+
+## Delete One of the Current User's Reviews
+
+!["Delete review"](screenshots/008_delete_review.png)
+
+## Exit 
+
+!["Goodbye message and exit the cli app"](screenshots/009_goodbye.png)

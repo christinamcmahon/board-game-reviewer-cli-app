@@ -189,10 +189,12 @@ class CommandLineInterface
     sum / board_game_reviews.length
   end
 
-  ### Helper Methods ###
+  ### Other Methods ###
 
   def exit_message
     puts "Thanks for stopping by. Happy Gaming!".colorize(:cyan)
+    puts @@font.write("Goodbye").colorize(:light_green)
+    puts ""
     exit
   end
 
