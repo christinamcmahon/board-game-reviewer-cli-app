@@ -46,6 +46,7 @@ In order to further my app, I wanted to:
 3. Use additional gems to make the app easy to navigate
 4. Allow the user to see the most popular board game
 5. Allow the user to see the average rating for a board game
+6. Allow the user to see all reviews of a certain game
 
 # Walkthrough
 
@@ -60,6 +61,7 @@ User's name defaults to 'User' if no name is entered.
 !["Main Menu"](/screenshots/002_main_menu.png)
 
 ## Game Information
+
 !["Game Info"](screenshots/003_game_info.png)
 
 ## Write Review
@@ -69,6 +71,10 @@ User's name defaults to 'User' if no name is entered.
 ## See All Current User's Reviews
 
 !["See all of the current user's reviews"](screenshots/005_all_reviews.png)
+
+## See All Reviews of a Board Game
+
+!["See all reviews of a game"](screenshots/010_all_reviews_by_game.png)
 
 ## Edit One of the Current User's Reviews
 
