@@ -68,6 +68,7 @@ class CommandLineInterface
   end
 
   def reviews_menu(board_game_id = nil)
+    reviews = User.find(@@current_user_id).reviews
     query = "Please select an option:"
     options = ["Write a review", "Edit a review", "Delete a review", "Back to main menu"]
     selection = @@prompt.select(query, options)
@@ -80,9 +81,19 @@ class CommandLineInterface
         write_board_game_review(board_game_id)
       end
     when "Edit a review"
-      edit_review
+      if reviews.length == 0
+        puts "You do not have any reviews to edit.".colorize(:red)
+        main_menu
+      else
+        edit_review
+      end
     when "Delete a review"
-      delete_review
+      if reviews.length == 0
+        puts "You do not have any reviews to delete.".colorize(:red)
+        main_menu
+      else
+        delete_review
+      end
     when "Back to main menu"
       main_menu
     end
@@ -160,7 +171,7 @@ class CommandLineInterface
     reviews = User.find(@@current_user_id).reviews
     see_reviews
     puts "------------------------"
-    options = [] # refactor?
+    options = []
     num = 1
     reviews.each do |review|
       options.push(num)
@@ -168,7 +179,7 @@ class CommandLineInterface
     end
     selection = @@prompt.select("Enter the number associated with the review you want to delete:", options)
     puts "------------------------".colorize(:light_green)
-    options = ["Delete the review".colorize(:red), "Never mind, go back to the main menu"]
+    options = ["Delete the review", "Never mind, go back to the main menu"]
     confirmation = @@prompt.select("Are you sure you want to delete this review?", options)
     if confirmation == "Delete the review"
       User.find(@@current_user_id).reviews[selection - 1].delete
