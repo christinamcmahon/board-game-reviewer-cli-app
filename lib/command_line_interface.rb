@@ -32,7 +32,7 @@ class CommandLineInterface
     options = ["Bananagrams", "Codenames", "King of Tokyo", "Magic: the Gathering", "Mysterium", "Settlers of Catan", "Splendor", "Taboo", "Ticket to Ride", "Uno", "See all of my reviews", "Exit"]
     selection = @@prompt.select(query, options)
     if selection == "See all of my reviews"
-      see_reviews
+      see_current_users_reviews
       reviews_menu(nil)
     elsif selection == "Exit"
       exit_message
@@ -121,7 +121,7 @@ class CommandLineInterface
 
   ### Read Methods ###
 
-  def see_reviews
+  def see_current_users_reviews
     reviews = User.find(@@current_user_id).reviews
     num = 1
     if reviews.length == 0
@@ -161,7 +161,7 @@ class CommandLineInterface
 
   def edit_review
     reviews = User.find(@@current_user_id).reviews
-    see_reviews
+    see_current_users_reviews
     puts "------------------------".colorize(:light_green)
     options = [] # refactor?
     num = 1
@@ -190,7 +190,7 @@ class CommandLineInterface
 
   def delete_review
     reviews = User.find(@@current_user_id).reviews
-    see_reviews
+    see_current_users_reviews
     puts "------------------------"
     options = []
     num = 1
