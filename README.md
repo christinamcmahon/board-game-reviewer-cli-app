@@ -52,6 +52,6 @@ In order to further my app, I wanted to:
 
 # Walkthrough
 
-[!["Welcome page with name prompt"](screenshots/Screen Shot 2020-01-02 at 3.29.14 PM.png)]
+!["Welcome page with name prompt"](file:///Users/christinamcmahon/Development/code/ruby-project-alt-guidelines-seattle-web-120919/screenshots/welcome_screenshot.png)
 
-!["alt"](https://raw.githubusercontent.com/christinamcmahon/ruby-project-alt-guidelines-seattle-web-120919/screenshots/welcome_screenshot.png)
+!["Welcome page with name prompt"](https://raw.githubusercontent.com/christinamcmahon/ruby-project-alt-guidelines-seattle-web-120919/blob/master/screenshots/welcome_screenshot.png)
