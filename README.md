@@ -3,7 +3,7 @@ Flatiron - Mod 1 Project: My Board Games Reviewer
 
 My Board Games Reviewer was created by Christina ([christinamcmahon](https://github.com/christinamcmahon)). 
 
-[Video walkthrough](https://youtu.be/Kngrksyw2u0)
+[Narrated Video Walkthrough](https://youtu.be/7jzVrbpAz6g)
 
 ## About
 
